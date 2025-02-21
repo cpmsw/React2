@@ -21,11 +21,11 @@ export default function Login() {
     const [user, setUser] = useState<any>(null);
     const [error, setError] = useState('');
     const [qrCode, setQrCode] = useState('');
-    const totpInputRef = useRef<HTMLInputElement>(null);
+    const totpInputRef = useRef<TextBoxComponent>(null);
 
     useEffect(() => {
         if (step === 3 && totpInputRef.current) {
-            totpInputRef.current.focus();
+            totpInputRef.current?.focusIn();
         }
     }, [step]);
 
@@ -137,6 +137,7 @@ export default function Login() {
                                 placeholder="Enter TOTP Code"
                                 value={totpCode}
                                 change={(e) => setTotpCode(e.value)}
+                                ref={totpInputRef}
                             />
                         </div>
                         <ButtonComponent className="w-full e-primary" type="button" onClick={handleVerifyTOTP}>Verify</ButtonComponent>
