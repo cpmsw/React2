@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { TextBoxComponent } from '@syncfusion/ej2-react-inputs';
 import { CheckBoxComponent, ButtonComponent } from '@syncfusion/ej2-react-buttons';
 import axios from 'axios';
-import './global.css';
+import '../global.css';
 import Dashboard from "./dashboard";
 //import { Link } from 'react-router-dom';
 
