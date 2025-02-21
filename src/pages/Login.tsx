@@ -139,7 +139,9 @@ export default function Login() {
                         <h2 className="text-2xl font-semibold text-gray-900 dark:text-white text-center mb-2">Set up TOTP</h2>
                         {error && <p className="text-red-500 text-center">{error}</p>}
                         <p className="text-center text-gray-700 dark:text-gray-300 mb-4">Scan the QR code with Google Authenticator.</p>
-                        {qrCode && <img src={`data:image/png;base64,${qrCode}`} alt="QR Code" className="mx-auto mb-4" />}
+                        <div  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                             {qrCode && <img src={`data:image/png;base64,${qrCode}`} alt="QR Code" style={{ width: '150px', height: '150px',alignContent:'center' }} />}
+                        </div>
                         <ButtonComponent className="w-full e-primary" type="button" onClick={() => setStep(3)}>Proceed</ButtonComponent>
                     </>
                 )}
