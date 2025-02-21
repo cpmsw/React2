@@ -21,6 +21,7 @@ export default function Login() {
     const [user, setUser] = useState<any>(null);
     const [error, setError] = useState('');
     const [qrCode, setQrCode] = useState('');
+    const [showQRCode, setShowQRCode] = useState<boolean>(false);
     const totpInputRef = useRef<TextBoxComponent>(null);
 
     useEffect(() => {
@@ -87,6 +88,24 @@ export default function Login() {
         }
     };
 
+    const handleQRCodeClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        generateQRCode(); // Trigger QR code generation
+        setShowQRCode(true); // Show the QR code after clicking the link
+
+    };
+    const generateQRCode = async () => {
+        try {
+            const response = await axios.get(`${apiBaseUrl}api/user/resend-qrcode`, {
+                params: { email },
+          });
+          setQrCode(response.data); // Extract the correct string value
+          console.log(response.data);
+        } catch (err) {
+          console.error("Error generating QR code:", err);
+        }
+      };
+
     return (
         <section className="bg-gray-200 dark:bg-gray-950 min-h-screen flex items-center justify-center">
             <div className="w-full max-w-md bg-white dark:bg-gray-900 rounded-2xl px-6 py-8 shadow-lg">
@@ -141,6 +160,26 @@ export default function Login() {
                             />
                         </div>
                         <ButtonComponent className="w-full e-primary" type="button" onClick={handleVerifyTOTP}>Verify</ButtonComponent>
+                        <div style={{ marginTop: '10px', textAlign: 'center' }}>
+                            <p>
+                                Need to rescan the QR code?{' '}
+                                <a
+                                href="#displayQRCode"
+                                onClick={handleQRCodeClick} // Handle the click to generate and show the QR code
+                                style={{ color: 'blue', textDecoration: 'underline' }}
+
+                                >
+                                QRCode
+                                </a>
+                            </p>
+                            {/* Show QR code only if it's generated */}
+                            {showQRCode && qrCode && (
+                                <div  style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                                <img src={`data:image/png;base64,${qrCode}`} alt="QR Code" style={{ width: '150px', height: '150px',alignContent:'center' }} />
+                                <p>Scan this QR code with your Google Authenticator app.</p>
+                                </div>
+                            )}
+                        </div>                        
                     </>
                 )}
             </div>
