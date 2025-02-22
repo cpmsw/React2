@@ -6,13 +6,19 @@ import { TextBoxComponent } from '@syncfusion/ej2-react-inputs';
 import { CheckBoxComponent, ButtonComponent } from '@syncfusion/ej2-react-buttons';
 import axios from 'axios';
 import '../global.css';
-import Dashboard from "./dashboard";
-//import { Link } from 'react-router-dom';
+
+
 
 const apiBaseUrl = process.env.REACT_APP_WEB_API_URL;
 
+interface LoginProps {
+    onLogin: () => void;
+}
 
-export default function Login() {
+
+
+export default function LoginForm({ onLogin }: { onLogin: () => void }) { // Renamed to LoginForm and receive onLogin prop
+
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -23,6 +29,7 @@ export default function Login() {
     const [qrCode, setQrCode] = useState('');
     const [showQRCode, setShowQRCode] = useState<boolean>(false);
     const totpInputRef = useRef<TextBoxComponent>(null);
+
 
     useEffect(() => {
         if (step === 3 && totpInputRef.current) {
@@ -48,8 +55,9 @@ export default function Login() {
                 if (userData.token) {
                     localStorage.setItem("jwttoken", userData.token);
                     localStorage.setItem("isTOTPEnabled", userData.isTOTPEnabled);
+                    localStorage.setItem('isLoggedIn','true');
                 }
-
+                onLogin(); // Call onLogin here
                 navigate('/dashboard');
             }
         } catch (err) {
@@ -78,7 +86,9 @@ export default function Login() {
                 if (user.token) {
                     localStorage.setItem("jwttoken", user.token);
                     localStorage.setItem("isTOTPEnabled", user.isTOTPEnabled);
+                    localStorage.setItem('isLoggedIn','true');
                 }
+                onLogin(); // Call onLogin here
                 navigate('/dashboard');
             } else {
                 setError('Invalid TOTP Code');
