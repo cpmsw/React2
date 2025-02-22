@@ -1,5 +1,14 @@
+In windows
 netstat -ano | findstr :3000
 taskkill /PID 12345 /F
+
+In ubuntu
+Ctrl Z -- suspend process
+Ctrl C Terminate
+lsof -i :3000
+kill -9 <PID>
+
+
 
 Download ppk file after creating ubuntu
 open putty gen and click conversions save as Open SSH vasu.pem
@@ -16,6 +25,8 @@ Host AWS_Ubuntu
   User ubuntu
   Port 22
   IdentityFile D:/React/cpmsoft/vasu.pem
+
+
 
 
 TO load on ubuntu open command prompt
