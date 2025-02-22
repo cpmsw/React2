@@ -1,2 +1,22 @@
 netstat -ano | findstr :3000
 taskkill /PID 12345 /F
+
+Download ppk file after creating ubuntu
+open putty gen and click conversions save as Open SSH vasu.pem
+open the properties and go to security tab and delete all inheritances
+add just the user vasu and allow read only property - Save it as vasu.pem
+
+If needed follow as below
+Remove old key from PC
+ssh-keygen -R 35.174.220.162
+
+config file
+Host AWS_Ubuntu
+  HostName 35.174.220.162
+  User ubuntu
+  Port 22
+  IdentityFile D:/React/cpmsoft/vasu.pem
+
+
+TO load on ubuntu open command prompt
+ssh -i "d:\react\cpmsoft\vasu.pem" ubuntu@35.174.220.162
